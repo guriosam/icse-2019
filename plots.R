@@ -39,7 +39,7 @@ create_intervals <- function(input_data, feat) {
 
 
 # Set the output dir
-setwd("D:/Pesquisa/icse-2019/plots/")
+setwd("D:/Pesquisa/icse-2019/metrics/")
 
 #TODO Documentation
 #plot with frequency - individually
