@@ -73,7 +73,7 @@ plot_data <- function(project, input_data, group_feat_name) {
 plot_data_stacked <- function(df1, df2, df3, df4, df5, group_feat_name, subtitle) {
   
   frequency_vector <- cbind(df1$frequency, df2$frequency, df3$frequency, df4$frequency, df5$frequency)
-  
+  print(frequency_vector)
   projects_data <- as.data.frame(frequency_vector)
   
  
@@ -323,6 +323,13 @@ linguist_nature <- cbind(linguist_fep_median, linguist_cep_median, linguist_rep_
 results_nature <- rbind(atom_nature, electron_nature, gitlfs_nature, hubot_nature, linguist_nature)
 colnames(results_nature) <- c("fep_median", "cep_median", "rep_median", "unp_median", "map_median", "fep_mean", "cep_mean", "rep_mean", "unp_mean", "map_mean")
 rownames(results_nature) <- c("atom", "electron", "gitlfs", "hubot", "linguist")
+
+print(results_nature)
+
+print(t(results_nature))
+
+results_nature <- t(results_nature)
+
 write.table(results_nature)# grid.table(results_nature)
 
 #png("projects_nature.png", height = 50*nrow(results_nature), width = 200*ncol(results_nature))
@@ -332,24 +339,46 @@ write.csv(results_nature, "projects_nature.csv")
 #Spearman 
 #TODO Tabela
 
-p <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
+p1 <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
+p2 <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
+p3 <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
+p4 <- cor(x = as.numeric(atom_issues_info$days_opened), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
 
-p <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
+correlations_1 <- cbind('-', p1, p2, p3, p4)
+colnames(correlations_1) <- c("days_opened", "days_between_first_and_last_comment", "number_of_comments", "days_first_comment_after_creation", "days_last_comment_before_closed")
 
-p <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
+p5 <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$days_opened), use='complete.obs', method = "spearman")
+p6 <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
+p7 <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
+p8 <- cor(x = as.numeric(atom_issues_info$days_between_first_and_last_comment), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
 
-p <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
+correlations_2 <- cbind(p5, '-', p6, p7, p8)
+colnames(correlations_2) <- c("days_opened", "days_between_first_and_last_comment", "number_of_comments", "days_first_comment_after_creation", "days_last_comment_before_closed")
 
-p <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
-p <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
+p9 <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_opened), use='complete.obs', method = "spearman")
+p10 <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
+p11 <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
+p12 <- cor(x = as.numeric(atom_issues_info$number_of_comments), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
 
+correlations_3 <- cbind(p9, p10, "-", p11, p12)
+colnames(correlations_3) <- c("days_opened", "days_between_first_and_last_comment", "number_of_comments", "days_first_comment_after_creation", "days_last_comment_before_closed")
+
+p13 <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$days_opened), use='complete.obs', method = "spearman")
+p14 <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
+p15 <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
+p16 <- cor(x = as.numeric(atom_issues_info$days_first_comment_after_creation), y = as.numeric(atom_issues_info$days_last_comment_before_closed), use='complete.obs', method = "spearman")
+
+correlations_4 <- cbind(p13, p14, p15, "-", p16)
+colnames(correlations_4) <- c("days_opened", "days_between_first_and_last_comment", "number_of_comments", "days_first_comment_after_creation", "days_last_comment_before_closed")
+
+p17 <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$days_opened), use='complete.obs', method = "spearman")
+p18 <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$days_between_first_and_last_comment), use='complete.obs', method = "spearman")
+p19 <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$number_of_comments), use='complete.obs', method = "spearman")
+p20 <- cor(x = as.numeric(atom_issues_info$days_last_comment_before_closed), y = as.numeric(atom_issues_info$days_first_comment_after_creation), use='complete.obs', method = "spearman")
+
+correlations_5 <- cbind(p17, p18, p19, p20, "-")
+colnames(correlations_5) <- c("days_opened", "days_between_first_and_last_comment", "number_of_comments", "days_first_comment_after_creation", "days_last_comment_before_closed")
+
+correlations_results <- rbind(correlations_1, correlations_2, correlations_3, correlations_4, correlations_5)
+rownames(correlations_results) <- c("days_opened", "days_between_first_and_last_comment", "number_of_comments", "days_first_comment_after_creation", "days_last_comment_before_closed")
+write.csv(correlations_results, "correlations_results.csv")
